@@ -25,6 +25,9 @@ python-dotenv = "^1.0.1"
 cloudinary = "^1.39.1"
 
 
+[tool.poetry.group.dev.dependencies]
+sphinx = "^7.2.6"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -1,4 +1,4 @@
-from pydantic import ConfigDict, field_validator, EmailStr
+from pydantic import ConfigDict, field_validator, EmailStr, validator
 from pydantic_settings import BaseSettings
 
 
