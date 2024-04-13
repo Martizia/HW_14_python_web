@@ -32,9 +32,8 @@ class Settings(BaseSettings):
             raise ValueError("Algorithm must be HS256 or HS512")
         return v
 
-
     model_config = ConfigDict(
-        extra="ignore", env_file=config_path, env_file_encoding="utf-8"
+        extra="ignore", env_file=config_path, env_file_encoding="utf-8" # noqa
     )
 
 
