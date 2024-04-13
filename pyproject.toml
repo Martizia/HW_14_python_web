@@ -23,6 +23,7 @@ fastapi-mail = "^1.4.1"
 fastapi-limiter = "^0.1.6"
 python-dotenv = "^1.0.1"
 cloudinary = "^1.39.1"
+pytest = "^8.1.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -31,3 +32,6 @@ sphinx = "^7.2.6"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
