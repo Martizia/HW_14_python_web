@@ -1,14 +1,11 @@
 import unittest
-from unittest.mock import MagicMock, AsyncMock, patch, call
+from unittest.mock import MagicMock, AsyncMock
 
-from sqlalchemy import select
-from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.db import get_db
 from src.database.models import Contact, User
 from src.schemas.contacts import ContactSchema, ContactUpdateSchema, ContactStatusUpdate
-from src.schemas.user import UserSchema, TokenSchema, UserResponse, RequestEmail
+from src.schemas.user import UserSchema
 from src.repository.users import create_user, get_user_by_email, update_avatar_url, update_token, confirmed_email
 
 

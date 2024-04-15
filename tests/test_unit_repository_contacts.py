@@ -1,12 +1,9 @@
 import unittest
-from unittest.mock import MagicMock, AsyncMock, patch
+from unittest.mock import MagicMock, AsyncMock
 
-from sqlalchemy import select
-from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.db import get_db
-from src.database.models import Contact, User
+from src.database.models import Contact
 from src.schemas.contacts import ContactSchema, ContactUpdateSchema, ContactStatusUpdate
 from src.repository.contacts import create_contact, get_contact, get_contacts, update_contact, update_status_contact, \
     delete_contact, search_contacts, get_birthday_contacts

@@ -11,6 +11,7 @@ from src.repository import users as repository_users
 from src.schemas.user import UserSchema, UserResponse, TokenSchema, RequestEmail
 from src.services.auth import auth_service
 from src.services.email import send_email
+from src.database import messages
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -46,7 +47,7 @@ async def signup(
     exist_user = await repository_users.get_user_by_email(body.email, db)
     if exist_user:
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT, detail="Account already exists"
+            status_code=status.HTTP_409_CONFLICT, detail=messages.ACCOUNT_EXIST
         )
     body.password = auth_service.get_password_hash(body.password)
     new_user = await repository_users.create_user(body, db)
@@ -75,15 +76,15 @@ async def login(
     user = await repository_users.get_user_by_email(body.username, db)
     if user is None:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail=messages.INVALID_EMAIL
         )
     if not user.confirmed:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Email not confirmed"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail=messages.EMAIL_NOT_CONFIRMED
         )
     if not auth_service.verify_password(body.password, user.password):
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail=messages.INVALID_PASSWORD
         )
     access_token = await auth_service.create_access_token(data={"sub": user.email})
     refresh_token = await auth_service.create_refresh_token(data={"sub": user.email})
@@ -123,11 +124,11 @@ async def refresh_token(
         )
 
     access_token = await auth_service.create_access_token(data={"sub": email})
-    refresh_token = await auth_service.create_refresh_token(data={"sub": email})
-    await repository_users.update_token(user, refresh_token, db)
+    new_refresh_token = await auth_service.create_refresh_token(data={"sub": email})
+    await repository_users.update_token(user, new_refresh_token, db)
     return {
         "access_token": access_token,
-        "refresh_token": refresh_token,
+        "refresh_token": new_refresh_token,
         "token_type": "bearer",
     }
 

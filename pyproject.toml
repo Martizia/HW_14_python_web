@@ -32,6 +32,9 @@ sphinx = "^7.2.6"
 
 [tool.poetry.group.tests.dependencies]
 pytest-cov = "^5.0.0"
+pytest-asyncio = "^0.23.6"
+httpx = "^0.27.0"
+aiosqlite = "^0.20.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -39,3 +42,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+filterwarnings = "ignore::DeprecationWarning"
